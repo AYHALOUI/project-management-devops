@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=projectdb
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=projectdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./database/init.sql:/docke-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    
+volumes:
+  postgres_data:
+
+      

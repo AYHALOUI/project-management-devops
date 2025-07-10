@@ -1,0 +1,14 @@
+CREATE TABLE projects (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    project_id INTEGER REFERENCES projects(id),
+    title VARCHAR(255) NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
