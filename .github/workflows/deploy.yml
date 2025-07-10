@@ -54,10 +54,12 @@ jobs:
         HOSTNAME: ${{ secrets.EC2_HOST }}
         USER_NAME: ec2-user
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           cd Gestion_Project &&
           git pull origin main &&
           docker-compose down &&
           docker-compose up --build -d
         '
+        rm -f private_key
