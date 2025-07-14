@@ -90,6 +90,10 @@ def update_task(task_id):
     conn.close()
     return jsonify({'message': 'Task updated'})
 
+@app.route("/health")
+def health():
+    return {"status": "healthy", "message": "DevOps pipeline working!"}
+
 if __name__ == '__main__':
     inti_db()
     app.run(host='0.0.0.0', port=5000)
