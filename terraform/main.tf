@@ -63,11 +63,13 @@ resource "aws_route_table_association" "public" {
 }
 
 # Security Group
+# Add these ingress rules to your security group
 resource "aws_security_group" "app" {
   name        = "project-management-app-sg"
   description = "Security group for project management app"
   vpc_id      = aws_vpc.main.id
 
+  # SSH access
   ingress {
     from_port   = 22
     to_port     = 22
@@ -75,9 +77,26 @@ resource "aws_security_group" "app" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Flask app
   ingress {
     from_port   = 5000
     to_port     = 5000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Grafana dashboard
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Prometheus
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
